@@ -52,24 +52,20 @@ class Smtp(object):
 
         # Compose the message.  If there are two bodies we need to create two
         # mime entities, otherwise we send one message
-        if (message.text and message.html) or message.attachments:
+        email_message = MIMEMultipart('mixed')
 
-            email_message = MIMEMultipart('alternative')
+        if message.text and message.html:
+            alt_message = MIMEMultipart('alternative')
+            alt_message.attach(self._getMessageMIME(message.text, 'plain'))
+            alt_message.attach(self._getMessageMIME(message.html, 'html'))
 
+            email_message.attach(alt_message)
+
+        else:
             if message.text:
                 email_message.attach(self._getMessageMIME(message.text, 'plain'))
             if message.html:
                 email_message.attach(self._getMessageMIME(message.html, 'html'))
-
-            if message.attachments:
-                outer_email_message = MIMEMultipart('related')
-                outer_email_message.attach(email_message)
-                email_message = outer_email_message
-
-        elif message.text:
-            email_message = self._getMessageMIME(message.text, 'plain')
-        else:
-            email_message = self._getMessageMIME(message.html, 'html')
 
         email_message['From'] = self._encodeEmail(message.from_name, message.from_address)
         if message.to_name:
