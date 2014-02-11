@@ -52,7 +52,7 @@ class Smtp(object):
 
         # Compose the message.  If there are two bodies we need to create two
         # mime entities, otherwise we send one message
-        email_message = MIMEMultipart('mixed')
+        email_message = MIMEMultipart('related')
 
         if message.text and message.html:
             alt_message = MIMEMultipart('alternative')
