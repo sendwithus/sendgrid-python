@@ -54,15 +54,18 @@ class Smtp(object):
         # mime entities, otherwise we send one message
         if (message.text and message.html) or message.attachments:
 
-            if message.attachments:
-                email_message = MIMEMultipart('mixed')
-            else:
-                email_message = MIMEMultipart('alternative')
+            email_message = MIMEMultipart('alternative')
 
             if message.text:
                 email_message.attach(self._getMessageMIME(message.text, 'plain'))
             if message.html:
                 email_message.attach(self._getMessageMIME(message.html, 'html'))
+
+            if message.attachments:
+                outer_email_message = MIMEMultipart('mixed')
+                outer_email_message.attach(email_message)
+                email_message = outer_email_message
+
         elif message.text:
             email_message = self._getMessageMIME(message.text, 'plain')
         else:
