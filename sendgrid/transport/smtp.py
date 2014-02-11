@@ -62,7 +62,7 @@ class Smtp(object):
                 email_message.attach(self._getMessageMIME(message.html, 'html'))
 
             if message.attachments:
-                outer_email_message = MIMEMultipart('mixed')
+                outer_email_message = MIMEMultipart('related')
                 outer_email_message.attach(email_message)
                 email_message = outer_email_message
 
