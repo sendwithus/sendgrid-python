@@ -6,7 +6,7 @@ except ImportError:
     import simplejson as json
 
 
-from sendgrid import exceptions
+from sendgrid_smtp import exceptions
 
 
 class Http(object):

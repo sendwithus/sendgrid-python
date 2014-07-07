@@ -10,7 +10,7 @@ from email.mime.image import MIMEImage
 from email.header import Header
 from email import base64mime
 
-from sendgrid import exceptions
+from sendgrid_smtp import exceptions
 
 # Overwrite how utf-8 bodies are handled, instead of base64encoding use
 # quote-printable
