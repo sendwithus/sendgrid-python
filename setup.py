@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='sendgrid',
+    name='sendgrid_smtp',
     version='0.1.4',
     author='Kane Kim',
     author_email='kane@sendgrid.com',
